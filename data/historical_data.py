@@ -66,4 +66,12 @@ for i in range(20):
     data = Hourly(  # access individual weather stations using WMO id
         city_info.iloc[i, 2], start, end)
     weather_data_temp = pd.concat([weather_data_temp, data.fetch()])
-    weather_data_temp.to_csv("city" + str(i) + ".csv")
+
+    # Ensure the 'original' directory exists
+    os.makedirs(os.path.join('data', 'original'), exist_ok=True)
+    
+    # Construct the path to save the CSV file in the 'original' folder
+    output_path = os.path.join('data', 'original', 'city' + str(i) + '.csv')
+    
+    # Save the DataFrame to the CSV file in the 'original' folder
+    weather_data_temp.to_csv(output_path)
