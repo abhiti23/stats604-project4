@@ -1,20 +1,21 @@
-.PHONY: clean raw data predictions
+.PHONY: clean rawdata predictions
 
 # The default task (first target) will run when you just type `make`
 all:
-  @echo "Running all analyses (except downloading raw data and making current predictions)..."
-  cd analysis && python cleaning.py
-  python model.py  
+	@echo "Running all analyses (except downloading raw data and making current predictions)..."
+	cd analysis && python cleaning.py && python main_code.py  
 
 clean:
-	echo "Deleting all cleaned data and output..."
+	@echo "Deleting everything except for the code and raw data (as originally downloaded)..."
 	rm -f data/cleaned/*
 	rm -f analysis/*.html	
 	rm -f output/*
 
-raw data:
-  rm -f data/original/*.csv
-  cd analysis && python historical_data.py
+rawdata:
+	@echo "Deleting and re-downloading the raw data..."
+	rm -f data/original/*.csv
+	cd data && python historical_data.py
 
 predictions:
-  cd analysis && python predictions.py 
+	@echo "Making current prediction..."
+	cd analysis && python predictions.py 
