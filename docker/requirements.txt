@@ -3,3 +3,4 @@ meteostat
 certifi
 pip-system-certs
 numpy
+scipy
