@@ -7,6 +7,7 @@ from meteostat import Point, Daily, Stations, Hourly
 from datetime import datetime
 import numpy as np
 import pandas as pd
+import os
 
 # dictionary for places and their dummies
 filetxt = open('cities.txt','r')
