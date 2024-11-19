@@ -3,7 +3,8 @@
 # The default task (first target) will run when you just type `make`
 all:
 	@echo "Running all analyses (except downloading raw data and making current predictions)..."
-	cd analysis && python cleaning.py && python training.py  
+	cd data && python cleaning.py 
+	cd analysis && python training.py  
 
 clean:
 	@echo "Deleting everything except for the code and raw data (as originally downloaded)..."
