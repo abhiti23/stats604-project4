@@ -1,6 +1,6 @@
-# py -m pip install meteostat
-# pip install --upgrade certifi
-# pip install pip-system-certs
+#!pip install meteostat
+#!pip install --upgrade certifi
+#!pip install pip-system-certs
 import ssl
 ssl._create_default_https_context = ssl._create_stdlib_context
 from meteostat import Point, Daily, Stations, Hourly
@@ -29,6 +29,10 @@ for i in range(len(station_ids_all)):
             city_info.iloc[j,2] = stations.fetch(i).iloc[-1,:].wmo
             city_info.iloc[j,3] = stations.fetch(i).iloc[-1,:].latitude
             city_info.iloc[j,4] = stations.fetch(i).iloc[-1,:].longitude
+
+            
+# Ensure the 'original' directory exists
+os.makedirs(os.path.join('original'), exist_ok=True)    
 
 # use the wmo code to get hourly data using Hourly from meteostat
 for i in range(20):
@@ -67,12 +71,9 @@ for i in range(20):
     data = Hourly(  # access individual weather stations using WMO id
         city_info.iloc[i, 2], start, end)
     weather_data_temp = pd.concat([weather_data_temp, data.fetch()])
-
-    # Ensure the 'original' directory exists
-    os.makedirs(os.path.join('data', 'original'), exist_ok=True)
     
     # Construct the path to save the CSV file in the 'original' folder
-    output_path = os.path.join('data', 'original', 'city' + str(i) + '.csv')
+    output_path = os.path.join('original', 'city' + str(i) + '.csv')
     
     # Save the DataFrame to the CSV file in the 'original' folder
     weather_data_temp.to_csv(output_path)
