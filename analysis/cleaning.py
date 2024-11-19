@@ -14,13 +14,13 @@ for i in range(20):
 '''
 
 # Ensure the 'cleaned' directory exists
-os.makedirs(os.path.join('data', 'cleaned'), exist_ok=True)
+os.makedirs(os.path.join('cleaned'), exist_ok=True)
 
 # Loop through the city files, assuming they exist in the 'original' folder
 for i in range(20):
     # Construct the input and output file paths
-    input_file = os.path.join('data', 'original', 'city' + str(i) + '.csv')
-    output_file = os.path.join('data', 'cleaned', 'city' + str(i) + 'clean.csv')
+    input_file = os.path.join('original', 'city' + str(i) + '.csv')
+    output_file = os.path.join('cleaned', 'city' + str(i) + 'clean.csv')
     
     # Read the CSV file from the 'original' folder
     df = pd.read_csv(input_file)
