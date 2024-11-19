@@ -1,7 +1,7 @@
 import ssl
 ssl._create_default_https_context = ssl._create_stdlib_context
 from meteostat import Point, Daily, Stations, Hourly
-from datetime import datetime
+from datetime import datetime, timedelta
 import numpy as np
 import pandas as pd
 import os
@@ -33,7 +33,7 @@ os.makedirs(os.path.join('current_data'), exist_ok=True)
 
 for i in range(20):
     weather_data_temp = pd.DataFrame()
-    start = datetime.utcnow().replace(hour=0, minute=0, second=0, microsecond=0)
+    start = datetime.utcnow().replace(hour=0, minute=0, second=0, microsecond=0) - timedelta(days=10)
     end = datetime.utcnow()
     data = Hourly(  # access individual weather stations using WMO id
         city_info.iloc[i, 2], start, end)
