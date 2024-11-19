@@ -5,10 +5,10 @@ FROM python:3.9-slim
 WORKDIR /app
 
 # Copy the entire repo from the build context (root of the repo) into the container
-COPY . .
+COPY .. /app
 
 # Install dependencies (requirements.txt is inside the docker/ folder)
-RUN pip install --no-cache-dir -r docker/requirements.txt
+RUN pip install --no-cache-dir -r /app/docker/requirements.txt
 
 # Interactive when running the container 
 CMD ["/bin/bash"]
