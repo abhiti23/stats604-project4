@@ -8,6 +8,8 @@ all:
 clean:
 	@echo "Deleting everything except for the code and raw data (as originally downloaded)..."
 	rm -f data/cleaned/*
+	rm -f data/current_data/original/*
+	rm -f data/current_data/cleaned/*
 	rm -f analysis/*.html	
 	rm -f output/*
 
