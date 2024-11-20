@@ -1,21 +1,20 @@
-Anchorage       PANC
-Boise           KBOI
-Chicago         KORD
-Denver          KDEN
-Detroit         KDTW
-Honolulu        PHNL
-Houston         KIAH
-Miami           KMIA
-Minneapolis     KMSP
-Oklahoma City   KOKC
-Nashville       KBNA
-New York        KJFK
-Phoenix         KPHX
-Portland ME     KPWM
-Portland OR     KPDX
-Salt Lake City  KSLC
-San Diego       KSAN
-San Francisco   KSFO
-Seattle         KSEA
-Washington DC   KDCA
-
+Anchorage       PANC     America/Anchorage   
+Boise           KBOI     America/Boise
+Chicago         KORD     America/Chicago
+Denver          KDEN     America/Denver
+Detroit         KDTW     America/Detroit
+Honolulu        PHNL     Pacific/Honolulu
+Houston         KIAH     America/Chicago
+Miami           KMIA     America/New_York
+Minneapolis     KMSP     America/Chicago
+Oklahoma City   KOKC     America/Chicago
+Nashville       KBNA     America/Chicago
+New York        KJFK     America/New_York
+Phoenix         KPHX     America/Phoenix
+Portland ME     KPWM     America/New_York
+Portland OR     KPDX     America/Los_Angeles
+Salt Lake City  KSLC     America/Denver
+San Diego       KSAN     America/Los_Angeles
+San Francisco   KSFO     America/Los_Angeles
+Seattle         KSEA     America/Los_Angeles
+Washington DC   KDCA     America/New_York
