@@ -9,10 +9,17 @@ import os
 # dictionary for places and their dummies
 filetxt = open('cities.txt','r')
 stringnum = filetxt.read()
+
+# Remove the last two lines (possibly empty or header/footer lines)
 stringnum = stringnum.split("\n")[:-2]
-city_names = [i.split("  ")[0] for i in stringnum]
-city_ids = [i.split("  ")[-1].strip() for i in stringnum]
-city_info = pd.DataFrame({"name" : city_names, "id" : city_ids, "wmo": "", "lat":"", "long":""})
+
+# Split lines and extract city names, city IDs, and time zones
+city_names, city_ids, time_zones = zip(*[
+    ( " ".join(line.split()[:-2]), line.split()[-2], line.split()[-1] ) 
+    for line in stringnum if len(line.split()) >= 3
+])
+city_info = pd.DataFrame({"name" : city_names, "id" : city_ids, "wmo": "", "lat":"", "long":"", "time zone" : time_zones})
+
 
 # trying to find the exact weather stations we need based on IDs
 stations = Stations()
@@ -30,13 +37,13 @@ for i in range(len(station_ids_all)):
 # Ensure the 'current_data' directory exists
 os.makedirs(os.path.join('current_data'), exist_ok=True)
 
-
+# get the current weather (the 10 previous days up to today)
 for i in range(20):
     weather_data_temp = pd.DataFrame()
     start = datetime.utcnow().replace(hour=0, minute=0, second=0, microsecond=0) - timedelta(days=10)
-    end = datetime.utcnow()
+    end = datetime(2025, 1, 1, 23, 59)
     data = Hourly(  # access individual weather stations using WMO id
-        city_info.iloc[i, 2], start, end)
+        city_info.iloc[i, 2], start, end, time_zones[i], False)
     weather_data_temp = pd.concat([weather_data_temp, data.fetch()])
     output_path = os.path.join('current_data', 'original', 'city' + str(i) + '.csv')
     weather_data_temp.to_csv(output_path)
@@ -50,4 +57,4 @@ for i in range(20):
     df_inter = df_inter.assign(time=df.time)
     df_inter = df_inter[['time','temp', 'dwpt', 'rhum', 'prcp', 'wspd', 'pres']]
     output_path = os.path.join('current_data', 'cleaned', 'city' + str(i) + 'clean.csv')
-    df_inter.to_csv(output_path)
+    df_inter.to_csv(output_path, index=False)
