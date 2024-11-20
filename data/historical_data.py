@@ -9,18 +9,19 @@ import numpy as np
 import pandas as pd
 import os
 
-# dictionary for places and their dummies
-filetxt = open('cities.txt','r')
-stringnum = filetxt.read()
+# Open and read the file
+with open('cities.txt', 'r') as filetxt:
+    stringnum = filetxt.read()
 
-# Remove the last two lines (possibly empty or header/footer lines)
-stringnum = stringnum.split("\n")[:-2]
+# Remove any empty lines and trim the content
+stringnum = stringnum.strip().split("\n")
 
 # Split lines and extract city names, city IDs, and time zones
 city_names, city_ids, time_zones = zip(*[
-    ( " ".join(line.split()[:-2]), line.split()[-2], line.split()[-1] ) 
+    (" ".join(line.split()[:-2]), line.split()[-2], line.split()[-1])
     for line in stringnum if len(line.split()) >= 3
 ])
+
 city_info = pd.DataFrame({"name" : city_names, "id" : city_ids, "wmo": "", "lat":"", "long":"", "time zone" : time_zones})
 
 
