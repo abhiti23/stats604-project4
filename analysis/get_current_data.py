@@ -40,7 +40,7 @@ os.makedirs(os.path.join('current_data'), exist_ok=True)
 # get the current weather (the 10 previous days up to today)
 for i in range(20):
     weather_data_temp = pd.DataFrame()
-    start = datetime.utcnow().replace(hour=0, minute=0, second=0, microsecond=0) - timedelta(days=10)
+    start = datetime(2024, 11, 14)
     end = datetime(2025, 1, 1, 23, 59)
     data = Hourly(  # access individual weather stations using WMO id
         city_info.iloc[i, 2], start, end, time_zones[i], False)
