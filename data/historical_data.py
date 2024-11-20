@@ -4,7 +4,7 @@
 import ssl
 ssl._create_default_https_context = ssl._create_stdlib_context
 from meteostat import Point, Daily, Stations, Hourly
-from datetime import datetime
+from datetime import datetime, timedelta
 import numpy as np
 import pandas as pd
 import os
@@ -12,10 +12,17 @@ import os
 # dictionary for places and their dummies
 filetxt = open('cities.txt','r')
 stringnum = filetxt.read()
+
+# Remove the last two lines (possibly empty or header/footer lines)
 stringnum = stringnum.split("\n")[:-2]
-city_names = [i.split("  ")[0] for i in stringnum]
-city_ids = [i.split("  ")[-1].strip() for i in stringnum]
-city_info = pd.DataFrame({"name" : city_names, "id" : city_ids, "wmo": "", "lat":"", "long":""})
+
+# Split lines and extract city names, city IDs, and time zones
+city_names, city_ids, time_zones = zip(*[
+    ( " ".join(line.split()[:-2]), line.split()[-2], line.split()[-1] ) 
+    for line in stringnum if len(line.split()) >= 3
+])
+city_info = pd.DataFrame({"name" : city_names, "id" : city_ids, "wmo": "", "lat":"", "long":"", "time zone" : time_zones})
+
 
 # trying to find the exact weather stations we need based on IDs
 stations = Stations()
@@ -29,7 +36,6 @@ for i in range(len(station_ids_all)):
             city_info.iloc[j,2] = stations.fetch(i).iloc[-1,:].wmo
             city_info.iloc[j,3] = stations.fetch(i).iloc[-1,:].latitude
             city_info.iloc[j,4] = stations.fetch(i).iloc[-1,:].longitude
-
             
 # Ensure the 'original' directory exists
 os.makedirs(os.path.join('original'), exist_ok=True)    
@@ -40,8 +46,8 @@ for i in range(20):
     for year in range(2004, 2024):
         start = datetime(year, 9, 1)
         end = datetime(year, 12, 31, 23, 59)
-        data = Hourly(  # access individual weather stations using WMO id
-            city_info.iloc[i, 2], start, end)
+        data = Hourly(  # access individual weather stations using WMO id (also based on time zone of location)
+            city_info.iloc[i, 2], start, end, time_zones[i], False)
         data = data.fetch()
         if not data.empty:
             weather_data_temp = pd.concat([weather_data_temp, data])
@@ -58,7 +64,7 @@ for i in range(20):
                 start = datetime(year, 9, 1)
                 end = datetime(year, 12, 31, 23, 59)
                 data = Hourly(  # access individual weather stations using WMO id
-                    possible_wmos.iloc[k], start, end)
+                    possible_wmos.iloc[k], start, end, time_zones[i], False)
                 data = data.fetch()
                 if not data.empty:
                     weather_data_temp = pd.concat([weather_data_temp, data])
@@ -69,7 +75,7 @@ for i in range(20):
     start = datetime(2024, 9, 1)
     end = datetime(2024, 11, 13, 23, 59)
     data = Hourly(  # access individual weather stations using WMO id
-        city_info.iloc[i, 2], start, end)
+        city_info.iloc[i, 2], start, end, time_zones[i], False)
     weather_data_temp = pd.concat([weather_data_temp, data.fetch()])
     
     # Construct the path to save the CSV file in the 'original' folder
