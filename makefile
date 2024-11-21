@@ -13,6 +13,8 @@ clean:
 	rm -f data/current_data/cleaned/*
 	rm -f analysis/*.html	
 	rm -f output/*
+	rm -f output/models/Huber/*
+	rm -f output/models/Lasso/*
 
 rawdata:
 	@echo "Deleting and re-downloading the raw data..."
