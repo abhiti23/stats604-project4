@@ -42,7 +42,7 @@ for i in range(len(station_ids_all)):
 os.makedirs(os.path.join('original'), exist_ok=True)    
 
 # use the wmo code to get hourly data using Hourly from meteostat
-weird_cities = [0, 9]
+weird_cities = [0, 5,8,9,16]
 for i in range(20):
     weather_data_temp = pd.DataFrame()
     for year in range(2006, 2024):
@@ -59,8 +59,8 @@ for i in range(20):
             l = len(possible_wmos)
             k = 1
             while (k < l):
-                start = datetime.datetime(year, 9, 1)
-                end = datetime.datetime(year, 12, 31, 23, 59)
+                start = datetime(year, 9, 1)
+                end = datetime(year, 12, 31, 23, 59)
                 data = Hourly(  # access individual weather stations using WMO id
                     possible_wmos.iloc[k], start, end, time_zones[i], False)
                 data = data.fetch()
@@ -76,8 +76,8 @@ for i in range(20):
             station_near = stations_near.fetch(20)
             possible_wmos = station_near.wmo.dropna()
             for k in range(len(possible_wmos)):
-                start = datetime.datetime(year, 9, 1)
-                end = datetime.datetime(year, 12, 31, 23, 59)
+                start = datetime(year, 9, 1)
+                end = datetime(year, 12, 31, 23, 59)
                 data = Hourly(  # access individual weather stations using WMO id
                     possible_wmos.iloc[k], start, end, time_zones[i], False)
                 data = data.fetch()
