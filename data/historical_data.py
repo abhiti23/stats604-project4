@@ -42,6 +42,7 @@ for i in range(len(station_ids_all)):
 os.makedirs(os.path.join('original'), exist_ok=True)    
 
 # use the wmo code to get hourly data using Hourly from meteostat
+weird_cities = [0, 9]
 for i in range(20):
     weather_data_temp = pd.DataFrame()
     for year in range(2006, 2024):
