@@ -30,6 +30,11 @@ for i in range(20):
     df_inter = df_inter.interpolate(axis=0)  # linear interpolation
     df_inter = df_inter.assign(time=df.time)
     df_inter = df_inter[['time','temp', 'dwpt', 'rhum', 'prcp', 'wspd', 'pres']]
-    
+    NA_column = df_inter.isna().any()
+
+    if NA_column.any():
+        bad_cols = np.where(NA_column)[0]
+        if sum(np.array(df_inter.iloc[:, list(NA_column)].isna(), dtype=bool))  < 10:
+            df_inter = df_inter.fillna(0)
     # Save the cleaned data to the 'cleaned' folder
     df_inter.to_csv(output_file, index=False)  # index=False to avoid writing row indices

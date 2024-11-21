@@ -44,33 +44,48 @@ os.makedirs(os.path.join('original'), exist_ok=True)
 # use the wmo code to get hourly data using Hourly from meteostat
 for i in range(20):
     weather_data_temp = pd.DataFrame()
-    for year in range(2004, 2024):
+    for year in range(2006, 2024):
         start = datetime(year, 9, 1)
         end = datetime(year, 12, 31, 23, 59)
         data = Hourly(  # access individual weather stations using WMO id (also based on time zone of location)
             city_info.iloc[i, 2], start, end, time_zones[i], False)
         data = data.fetch()
-        if not data.empty:
-            weather_data_temp = pd.concat([weather_data_temp, data])
-
-        # if no data is available for that year, we find the 10 nearest stations and hope that some of them have not NA wmo IDs and that one of those will return a non-empty dataframe when querying using Hourly
-        else:
+        if data.empty:
             stations_near = Stations()
             stations_near = stations_near.nearby(city_info.lat.iloc[i], city_info.long.iloc[i])
-            station_near = stations_near.fetch(10)
+            station_near = stations_near.fetch(20)
             possible_wmos = station_near.wmo.dropna()
             l = len(possible_wmos)
             k = 1
             while (k < l):
-                start = datetime(year, 9, 1)
-                end = datetime(year, 12, 31, 23, 59)
+                start = datetime.datetime(year, 9, 1)
+                end = datetime.datetime(year, 12, 31, 23, 59)
                 data = Hourly(  # access individual weather stations using WMO id
                     possible_wmos.iloc[k], start, end, time_zones[i], False)
                 data = data.fetch()
                 if not data.empty:
-                    weather_data_temp = pd.concat([weather_data_temp, data])
+                    # weather_data_temp = pd.concat([weather_data_temp, data])
                     break
                 k = k + 1
+
+        if i in weird_cities:
+            prcpcity0 = pd.DataFrame()
+            stations_near = Stations()
+            stations_near = stations_near.nearby(city_info.lat.iloc[i], city_info.long.iloc[i])
+            station_near = stations_near.fetch(20)
+            possible_wmos = station_near.wmo.dropna()
+            for k in range(len(possible_wmos)):
+                start = datetime.datetime(year, 9, 1)
+                end = datetime.datetime(year, 12, 31, 23, 59)
+                data = Hourly(  # access individual weather stations using WMO id
+                    possible_wmos.iloc[k], start, end, time_zones[i], False)
+                data = data.fetch()
+                prcpcity0[str(k)] = data.prcp
+            prcpavg = prcpcity0.mean(axis=1)
+            data.prcp = prcpavg
+            # print(data.head())
+
+        weather_data_temp = pd.concat([weather_data_temp, data])
 
     # adding current year's data:
     start = datetime(2024, 9, 1)
@@ -84,3 +99,6 @@ for i in range(20):
     
     # Save the DataFrame to the CSV file in the 'original' folder
     weather_data_temp.to_csv(output_path)
+
+
+
