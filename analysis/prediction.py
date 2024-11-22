@@ -20,7 +20,6 @@ def get_daily_stats(file_path,training):
     data['temp'] = data['temp'] * 9 / 5 + 32
     data['dwpt'] = data['dwpt'] * 9 / 5 + 32
     data['pres'] = data['pres'] - 1000
-    data['prcp'] = 0 #subject to change
     columns_to_aggregate = ['temp', 'dwpt', 'rhum', 'prcp', 'wspd', 'pres']
     daily_stats = data.groupby('date')[columns_to_aggregate].agg(['max', 'min', 'mean'])
     daily_stats.columns = ['_'.join(col).strip() for col in daily_stats.columns.values]
@@ -83,7 +82,6 @@ def get_prediction_value(index, response_type, step_size, approach):
             f"city{index}clean.csv"
         )
     current_data = pd.read_csv(current_dir)
-    current_data['prcp'] = 0
     daily_stats_df = get_daily_stats(current_dir,training = False)
     daily_stats_df
     prediction_data = get_prediction_data(data = daily_stats_df, response_type = response_type, lag_level = lag_level).tail(1).drop(columns = ['date'])
