@@ -31,7 +31,7 @@ def get_daily_stats(file_path,training):
         daily_stats = daily_stats[daily_stats['year'] != '2024']
     daily_stats.drop(columns=['year'], inplace=True)
 
-
+    
     if training:
         daily_stats = daily_stats[~daily_stats['date'].astype(str).str.startswith('2024-11')]
 
@@ -88,16 +88,19 @@ def get_prediction_value(index, response_type, step_size, approach):
     prediction_value = model_trained.predict(prediction_data)
     return prediction_value
 
+
 prediction_results = []
 for c in range(20):
     for s in range(1,6):
         for r in ['min','mean','max']:
             value = get_prediction_value(index = c, response_type = r, step_size =s, approach = 1)
-            prediction_results.append(value)
+            prediction_results.append(float(value))
 
 
+if isinstance(prediction_results, np.ndarray):
+    prediction_results = prediction_results.tolist()
 current_date = datetime.now()
-print_res = f"{current_date.strftime('%Y-%m-%d')} " + ",".join(map(str, prediction_results))
+print_res = f"\"{current_date.strftime('%Y-%m-%d')}\"" + "," + ",".join(f"{v:04.1f}" for v in prediction_results)
 print(print_res)
 output_dir = "../output/prediction_results"
 if not os.path.exists(output_dir):
