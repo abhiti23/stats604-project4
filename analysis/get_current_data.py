@@ -47,28 +47,60 @@ for i in range(20):
         city_info.iloc[i, 2], start, end, time_zones[i], False)
     data = data.fetch()
     if not data.empty:
-        weather_data_temp = pd.concat([weather_data_temp, data])
-
-    # if no data is available for that year, we find the 10 nearest stations and hope that some of them have not NA wmo IDs and that one of those will return a non-empty dataframe when querying using Hourly
-    else:
+        if data['prcp'].isnull().sum() >10:
+            data_prcp = Hourly(  # access individual weather stations using WMO id
+            city_info.iloc[i, 2], start, end, time_zones[i])
+            data_prcp = data_prcp.fetch()
+            data['prcp'] = data_prcp['prcp']
+        if data['pres'].isnull().sum() >10:
+            data_pres = Hourly(  # access individual weather stations using WMO id
+            city_info.iloc[i, 2], start, end, time_zones[i])
+            data_pres = data_pres.fetch()
+            data['pres'] = data_pres['pres']
+    if data.empty:
         stations_near = Stations()
         stations_near = stations_near.nearby(city_info.lat.iloc[i], city_info.long.iloc[i])
-        station_near = stations_near.fetch(10)
+        station_near = stations_near.fetch(20)
         possible_wmos = station_near.wmo.dropna()
         l = len(possible_wmos)
         k = 1
         while (k < l):
-            start = datetime(year, 9, 1)
-            end = datetime(year, 12, 31, 23, 59)
+            start = datetime.utcnow().replace(hour=0, minute=0, second=0, microsecond=0) - timedelta(days=10)
+            end = datetime(2025, 1, 1, 23, 59)
             data = Hourly(  # access individual weather stations using WMO id
                 possible_wmos.iloc[k], start, end, time_zones[i], False)
             data = data.fetch()
             if not data.empty:
-                weather_data_temp = pd.concat([weather_data_temp, data])
+                # weather_data_temp = pd.concat([weather_data_temp, data])
                 break
             k = k + 1
+        if data['prcp'].isnull().sum() >10:
+            data_prcp = Hourly(  # access individual weather stations using WMO id
+            possible_wmos.iloc[k], start, end, time_zones[i])
+            data_prcp = data_prcp.fetch()
+            data['prcp'] = data_prcp['prcp']
+        if data['pres'].isnull().sum() >10:
+            data_pres = Hourly(  # access individual weather stations using WMO id
+            possible_wmos.iloc[k], start, end, time_zones[i])
+            data_pres = data_pres.fetch()
+            data['pres'] = data_pres['pres']
+
+    if pd.isna(data['wspd'][0]):
+        data['wspd'][0] = data['wspd'][1]
+        
+        # print(data.head())
+
+    weather_data_temp = pd.concat([weather_data_temp, data])
+            
     output_path = os.path.join('current_data', 'original', 'city' + str(i) + '.csv')
     weather_data_temp.to_csv(output_path)
+    
+    # change formatting of the datetime column
+    df = pd.read_csv(output_path)
+    df['time'] = pd.to_datetime(df['time'], errors='coerce')
+    df['time'] = df['time'].apply(lambda x: x.strftime('%Y-%m-%d %H:%M:%S') if pd.notnull(x) else x)
+    # Save the DataFrame back to the same CSV file (overwrite)
+    df.to_csv(output_path, index=False)
     
     
 
