@@ -101,5 +101,12 @@ for i in range(20):
     # Save the DataFrame to the CSV file in the 'original' folder
     weather_data_temp.to_csv(output_path)
 
+    # change formatting of the datetime column
+    df = pd.read_csv(output_path)
+    df['time'] = pd.to_datetime(df['time'], errors='coerce')
+    df['time'] = df['time'].apply(lambda x: x.strftime('%Y-%m-%d %H:%M:%S') if pd.notnull(x) else x)
+    # Save the DataFrame back to the same CSV file (overwrite)
+    df.to_csv(output_path, index=False)
+
 
 
