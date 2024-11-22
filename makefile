@@ -9,7 +9,8 @@ clean:
 	@rm -f data/cleaned/* 2>/dev/null
 	@rm -f analysis/current_data/original/* 2>/dev/null
 	@rm -f analysis/current_data/cleaned/* 2>/dev/null
-	@rm -f output/* 2>/dev/null
+	@rm -f output/Huber/* 2>/dev/null
+	@rm -f output/Lasso/* 2>/dev/null
 
 rawdata:
 	@rm -f data/original/*.csv 2>/dev/null
@@ -17,4 +18,4 @@ rawdata:
 
 predictions:
 	@cd analysis && python get_current_data.py 2>/dev/null
-    
+	@cd analysis && python prediction.py 2>/dev/null
