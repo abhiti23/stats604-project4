@@ -17,4 +17,4 @@ rawdata:
 
 predictions:
     @cd analysis && python get_current_data.py 2>/dev/null
-    @cd analysis && python predictions.py
+    @cd analysis && python predictions.py 2>/dev/null
