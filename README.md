@@ -44,7 +44,7 @@ If you want to run the image and have the container automatically exit after exe
 
 `docker run -it --rm aedozie/stats604-project4-ccem <<insert command>>`
 
-Replace <<insert command>> with what you wish to run. For example, `make predictions`, the other commands listed above, or any scripts within the container.
+Replace `<<insert command>>` with what you wish to run. For example, `make predictions`, the other commands listed above, or any scripts within the container.
 This is useful if you only need the container to run a command and then automatically stop without needing to manually exit.
 
 
