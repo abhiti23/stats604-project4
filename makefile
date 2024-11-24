@@ -11,6 +11,7 @@ clean:
 	@rm -f analysis/current_data/cleaned/* 2>/dev/null
 	@rm -f output/models/Huber/* 2>/dev/null
 	@rm -f output/models/Lasso/* 2>/dev/null
+	@rm -f output/prediction_results/* 2>/dev/null    
 
 rawdata:
 	@rm -f data/original/*.csv 2>/dev/null
