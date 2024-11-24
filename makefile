@@ -9,8 +9,8 @@ clean:
 	@rm -f data/cleaned/* 2>/dev/null
 	@rm -f analysis/current_data/original/* 2>/dev/null
 	@rm -f analysis/current_data/cleaned/* 2>/dev/null
-	@rm -f output/Huber/* 2>/dev/null
-	@rm -f output/Lasso/* 2>/dev/null
+	@rm -f output/models/Huber/* 2>/dev/null
+	@rm -f output/models/Lasso/* 2>/dev/null
 
 rawdata:
 	@rm -f data/original/*.csv 2>/dev/null
