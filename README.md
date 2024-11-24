@@ -25,8 +25,11 @@ To run the container interactively, use this command:
 After running the above command, you will be inside the container, and you can execute any scripts or the following commands in the container environment:
 
 `make clean` -- deletes everything except for the code (i.e., markdown files) and raw data (as originally downloaded)
+
 `make` -- runs all analyses (except downloading raw data and making current predictions)
+
 `make predictions` -- makes current predictions and outputs them to the screen
+
 `make rawdata` -- deletes and re-downloads the raw data
 
 When you're done and want to exit the interactive session, simply type:
