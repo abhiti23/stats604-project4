@@ -30,6 +30,25 @@ After running the above command, you will be inside the container, and you can e
 
 `make predictions` -- makes current predictions and outputs them to the screen
 
+  The output will look like this:
+  "YYYY-MM-DD", XX.X, XX.X, XX.X, ..., XX.X
+  
+  where
+  
+  "YYYY-MM-DD" is the current date
+  
+  There are 300 numbers of the form XX.X where each X is a digit
+  
+  The numbers are predictions in degrees fahrenheit
+  
+  The order is given by:
+  
+  Anchorage +1 day, minimum; Anchorage +1 day, average; Anchorage +1 day, maximum;
+  
+  Anchorage +2 days, minimum; ...; Washington DC +5 days, maximum
+
+  Note: use the data/cities.txt file to recall the order of the output.
+
 `make rawdata` -- deletes and re-downloads the raw data
 
 When you're done and want to exit the interactive session, simply type:
