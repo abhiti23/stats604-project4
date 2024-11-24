@@ -49,9 +49,12 @@ This is useful if you only need the container to run a command and then automati
 
 
 **Summary of Commands**
+
 To pull the image:
 `docker pull aedozie/stats604-project4-ccem`
+
 To run interactively (stay inside the container until you exit):
 `docker run -it aedozie/stats604-project4-ccem`
+
 To run and quit automatically (container removes itself after execution):
 `docker run -it --rm aedozie/stats604-project4-ccem <<insert command>>` 
