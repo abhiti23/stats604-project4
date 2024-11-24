@@ -1,4 +1,4 @@
-# STATS 604 Project 4
+# STATS 604 Project 4 (CCEM)
 
 This repository contains files which were used to create a Docker image (aedozie/stats604-project4-ccem) for the Stats 604 weather prediction project regarding 20 cities (refer to data/cities.txt for the full list). You can pull and run this image locally using Docker. Below are the instructions to help you set it up and run the container in an interactive mode or with a single command that quits after execution.
 <br><br>
