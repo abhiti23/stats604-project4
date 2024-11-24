@@ -1,13 +1,13 @@
 # STATS 604 Project 4
 
 This repository contains a Docker image for the Stats604 Project 4 - CCEM weather prediction model for 20 cities (refer to data/cities.txt for the full list). You can pull and run this image locally using Docker. Below are the instructions to help you set it up and run the container in an interactive mode or with a single command that quits after execution.
-
+<br><br>
 
 
 **Prerequisites**
 
 Ensure you have Docker installed on your local machine.
-
+<br><br>
 
 
 **Pulling the Docker Image**
@@ -17,7 +17,7 @@ To pull the image from Docker Hub, use the following command:
 `docker pull aedozie/stats604-project4-ccem`
 
 This command will download the image and make it available locally on your system.
-
+<br><br>
 
 
 **Running the Docker Image Interactively**
@@ -62,7 +62,7 @@ When you're done and want to exit the interactive session, simply type:
 `exit`
 
 This will stop and exit the container.
-
+<br><br>
 
 
 **Running the Docker Image and Quitting Afterwards**
@@ -73,7 +73,7 @@ If you want to run the image and have the container automatically exit after exe
 
 Replace `<<insert command>>` with what you wish to run. For example, `make predictions`, the other commands listed above, or any scripts within the container.
 This is useful if you only need the container to run a command and then automatically stop without needing to manually exit.
-
+<br><br>
 
 
 **Summary of Commands**
