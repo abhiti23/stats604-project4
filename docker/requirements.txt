@@ -1,9 +1,11 @@
-pandas
+pandas>=1.3.6
 meteostat
 certifi
 pip-system-certs
-numpy
+numpy<2
 scipy
 joblib
 scikit-learn
 pytz
+bottleneck>=1.3.6
+pyarrow
