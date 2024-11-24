@@ -1,3 +1,4 @@
+import numpy as np
 import pandas as pd
 import os
 # import scipy
@@ -34,7 +35,7 @@ for i in range(20):
 
     if NA_column.any():
         bad_cols = np.where(NA_column)[0]
-        if sum(np.array(df_inter.iloc[:, list(NA_column)].isna(), dtype=bool))  < 10:
+        if np.sum(np.array(df_inter.iloc[:, list(NA_column)].isna(), dtype=bool))  < 10:
             df_inter = df_inter.fillna(0)
     # Save the cleaned data to the 'cleaned' folder
     df_inter.to_csv(output_file, index=False)  # index=False to avoid writing row indices
