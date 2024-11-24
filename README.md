@@ -30,9 +30,9 @@ To run the container interactively, use this command:
 
 After running the above command, you will be inside the container, and you can execute any scripts or the following commands in the container environment:
 
-`make clean` -- deletes everything except for the code (i.e., markdown files) and raw data (as originally downloaded)
+`make clean` -- deletes everything except for the code (i.e., markdown files) and raw data (as originally downloaded). Takes < 1 minute.
 
-`make` -- runs all analyses (except downloading raw data and making current predictions)
+`make` -- runs all analyses (except downloading raw data and making current predictions). Takes 6:03
 
 `make predictions` -- makes current predictions and outputs them to the screen
 
@@ -55,7 +55,7 @@ After running the above command, you will be inside the container, and you can e
 
   Note: use the data/cities.txt file to recall the order of the output.
 
-`make rawdata` -- deletes and re-downloads the raw data
+`make rawdata` -- deletes and re-downloads the raw data. Takes ~10 minutes.
 
 When you're done and want to exit the interactive session, simply type:
 
