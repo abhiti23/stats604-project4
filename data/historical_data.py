@@ -78,10 +78,10 @@ for i in range(20):
             for k in range(len(possible_wmos)):
                 start = datetime(year, 9, 1)
                 end = datetime(year, 12, 31, 23, 59)
-                data = Hourly(  # access individual weather stations using WMO id
+                data2 = Hourly(  # access individual weather stations using WMO id
                     possible_wmos.iloc[k], start, end, time_zones[i], False)
-                data = data.fetch()
-                prcpcity0[str(k)] = data.prcp
+                data2 = data2.fetch()
+                prcpcity0[str(k)] = data2.prcp
             prcpavg = prcpcity0.mean(axis=1)
             data.prcp = prcpavg
             # print(data.head())
