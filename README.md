@@ -32,7 +32,7 @@ After running the above command, you will be inside the container, and you can e
 
 `make clean` -- deletes everything except for the code (i.e., markdown files) and raw data (as originally downloaded). Takes < 1 minute.
 
-`make` -- runs all analyses (except downloading raw data and making current predictions). Takes 6:03
+`make` -- runs all analyses (except downloading raw data and making current predictions). Takes ~ 1 hour and 35 minutes
 
 `make predictions` -- makes current predictions and outputs them to the screen
 
