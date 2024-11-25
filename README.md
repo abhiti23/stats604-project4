@@ -26,7 +26,7 @@ Once the image is pulled, you can run it interactively to work within the contai
 
 To run the container interactively, use this command:
 
-`docker run -it aedozie/stats604-project4-ccem`
+`docker run -it --rm aedozie/stats604-project4-ccem`
 
 After running the above command, you will be inside the container, and you can execute any scripts or the following commands in the container environment:
 
@@ -82,9 +82,9 @@ To pull the image:
 
 `docker pull aedozie/stats604-project4-ccem`
 
-To run interactively (stay inside the container until you exit):
+To run interactively (stay inside the container until you exit manually):
 
-`docker run -it aedozie/stats604-project4-ccem`
+`docker run -it --rm aedozie/stats604-project4-ccem`
 
 To run and quit automatically (container removes itself after execution):
 
