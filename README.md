@@ -30,7 +30,7 @@ To run the container interactively, use this command:
 
 After running the above command, you will be inside the container, and you can execute any scripts or the following commands in the container environment:
 
-`make clean` -- deletes everything except for the code (i.e., markdown files) and raw data (as originally downloaded). Takes < 1 minute.
+`make clean` -- deletes everything except for the code (i.e., python files) and raw data (as originally downloaded). Takes < 1 minute.
 
 `make` -- runs all analyses (except downloading raw data and making current predictions). Takes ~ 1 hour and 35 minutes.
 
